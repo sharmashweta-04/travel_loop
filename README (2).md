@@ -29,7 +29,7 @@
 - [Screens & Pages](#-screens--pages)
 - [Build Timeline](#-build-timeline)
 - [Deployment](#-deployment)
-- [Team](#-team)
+
 
 ---
 
@@ -812,16 +812,7 @@ app.use(cors({
 
 ---
 
-## 👥 Team
 
-| Name | Role |
-|------|------|
-| — | Full Stack Lead |
-| — | Frontend Developer |
-| — | Backend Developer |
-| — | UI/UX & Database Design |
-
----
 
 <div align="center">
 
