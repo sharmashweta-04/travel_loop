@@ -6,9 +6,9 @@
 
 *Plan smarter. Travel better. Share your journey.*
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://react.dev)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)](https://react.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=node.js)](https://nodejs.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Prisma-4169E1?style=flat&logo=postgresql)](https://postgresql.org)
+[![SQLite](https://img.shields.io/badge/SQLite-Prisma-003B57?style=flat&logo=sqlite)](https://sqlite.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat&logo=tailwindcss)](https://tailwindcss.com)
 
 </div>
@@ -66,14 +66,14 @@ Users can dream, design, and organize multi-city trips — with automatic budget
 
 | Technology | Purpose |
 |-----------|---------|
-| **React 18 + Vite** | UI framework with fast HMR dev server |
-| **React Router DOM v6** | Client-side routing and navigation |
-| **Tailwind CSS** | Utility-first responsive styling |
+| **React 19 + Vite 8** | UI framework with fast HMR dev server |
+| **React Router v7** | Client-side routing and navigation |
+| **Tailwind CSS 3** | Utility-first responsive styling |
 | **Axios** | HTTP client for API calls |
 | **Recharts** | Budget pie, bar, and line charts |
 | **React Hook Form** | Form state management and validation |
 | **jsPDF + html2canvas** | PDF invoice generation and export |
-| **Zustand** | Lightweight global state management |
+| **Lucide React** | Modern icons for UI |
 
 ### Backend
 
@@ -81,18 +81,17 @@ Users can dream, design, and organize multi-city trips — with automatic budget
 |-----------|---------|
 | **Node.js + Express** | REST API server |
 | **Prisma ORM** | Type-safe database queries and migrations |
-| **PostgreSQL** | Relational database (required by problem statement) |
+| **SQLite / PostgreSQL** | Relational database support (SQLite configured by default) |
 | **bcryptjs** | Secure password hashing |
 | **jsonwebtoken** | JWT-based authentication |
 | **cors + dotenv** | Cross-origin support and environment config |
-| **multer** | File and image uploads |
 
 ### DevOps
 
 | Technology | Purpose |
 |-----------|---------|
 | **Vercel** | Frontend deployment |
-| **Railway** | Backend + PostgreSQL deployment |
+| **Railway** | Backend + SQLite/PostgreSQL deployment |
 | **GitHub** | Version control and collaboration |
 
 ---
@@ -123,7 +122,7 @@ Users can dream, design, and organize multi-city trips — with automatic budget
 └───────────────────────────┬─────────────────────────────────┘
                             │ SQL via Prisma
 ┌───────────────────────────▼─────────────────────────────────┐
-│              Database  —  PostgreSQL                         │
+│              Database  —  SQLite / PostgreSQL                │
 │                                                              │
 │   users · trips · stops · activities · budgets               │
 │   notes · checklist_items                                    │
@@ -135,14 +134,14 @@ Users can dream, design, and organize multi-city trips — with automatic budget
 ## 🗄 Database Schema
 
 ```prisma
-// prisma/schema.prisma
+// backend/prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -255,10 +254,11 @@ model ChecklistItem {
 ```
 traveloop/
 │
-├── client/                             # React frontend
+├── frontend/                           # React frontend
 │   ├── public/
 │   └── src/
-│       ├── pages/
+│       ├── screens/
+│       │   ├── Landing.jsx             # Welcome / Landing Screen
 │       │   ├── Login.jsx               # Screen 1
 │       │   ├── Register.jsx            # Screen 2
 │       │   ├── Dashboard.jsx           # Screen 3
@@ -276,42 +276,41 @@ traveloop/
 │       ├── components/
 │       │   ├── Navbar.jsx
 │       │   ├── TripCard.jsx
-│       │   ├── BudgetChart.jsx
-│       │   ├── SearchBar.jsx
 │       │   └── ProtectedRoute.jsx
 │       ├── context/
 │       │   └── AuthContext.jsx
-│       ├── api/
-│       │   ├── index.js                # Axios instance + interceptor
-│       │   ├── auth.js
-│       │   ├── trips.js
-│       │   ├── stops.js
-│       │   └── activities.js
+│       ├── utils/
+│       │   └── api.js                  # Axios instance + request interceptor
 │       ├── App.jsx
 │       └── main.jsx
 │
-├── server/                             # Express backend
+├── backend/                            # Express backend
 │   ├── prisma/
-│   │   └── schema.prisma
-│   ├── src/
-│   │   ├── routes/
-│   │   │   ├── auth.routes.js
-│   │   │   ├── trips.routes.js
-│   │   │   ├── stops.routes.js
-│   │   │   ├── activities.routes.js
-│   │   │   ├── budget.routes.js
-│   │   │   ├── checklist.routes.js
-│   │   │   ├── notes.routes.js
-│   │   │   └── admin.routes.js
-│   │   ├── controllers/
-│   │   │   ├── auth.controller.js
-│   │   │   ├── trips.controller.js
-│   │   │   ├── stops.controller.js
-│   │   │   └── activities.controller.js
-│   │   ├── middleware/
-│   │   │   └── auth.middleware.js
-│   │   └── app.js
+│   │   ├── schema.prisma               # SQLite Prisma schema
+│   │   └── client.js                   # Prisma client instantiation
+│   ├── routes/
+│   │   ├── activities.js
+│   │   ├── admin.js
+│   │   ├── auth.js
+│   │   ├── budget.js
+│   │   ├── checklist.js
+│   │   ├── notes.js
+│   │   ├── stops.js
+│   │   └── trips.js
+│   ├── controllers/
+│   │   ├── activities.js
+│   │   ├── admin.js
+│   │   ├── auth.js
+│   │   ├── budget.js
+│   │   ├── checklist.js
+│   │   ├── notes.js
+│   │   ├── stops.js
+│   │   └── trips.js
+│   ├── middleware/
+│   │   └── auth.js                     # Auth middleware
 │   ├── .env
+│   ├── app.js                          # Server entry point
+│   ├── dev.db                          # SQLite local database
 │   └── package.json
 │
 └── README.md
@@ -324,7 +323,7 @@ traveloop/
 ### Prerequisites
 
 - Node.js v18+
-- PostgreSQL installed locally (or use Railway cloud DB)
+- SQLite (configured by default) or PostgreSQL
 - Git
 
 ---
@@ -334,65 +333,89 @@ traveloop/
 ```bash
 # 1. Clone the repository
 git clone https://github.com/your-team/traveloop.git
-cd traveloop/server
+cd traveloop/backend
 
 # 2. Install dependencies
 npm install
 
 # 3. Configure environment variables
-cp .env.example .env
-# Edit .env with your database URL and JWT secret
+# Create a .env file (see Environment Variables section below)
 
 # 4. Push schema to database
 npx prisma db push
 npx prisma generate
 
-# 5. (Optional) Seed the database
-npx prisma db seed
-
-# 6. Start the development server
-npm run dev
+# 5. Start the development server
+node app.js
 # Server runs on http://localhost:5000
 ```
 
-**`server/src/app.js`**
+**`backend/app.js`**
 ```js
-const express = require('express');
-const cors    = require('cors');
 require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+
+const authRoutes = require('./routes/auth');
+const tripsRoutes = require('./routes/trips');
+const stopsRoutes = require('./routes/stops');
+const activitiesRoutes = require('./routes/activities');
+const budgetRoutes = require('./routes/budget');
+const checklistRoutes = require('./routes/checklist');
+const notesRoutes = require('./routes/notes');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
-app.use(cors({ origin: process.env.CLIENT_URL }));
+
+app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth',       require('./routes/auth.routes'));
-app.use('/api/trips',      require('./routes/trips.routes'));
-app.use('/api/stops',      require('./routes/stops.routes'));
-app.use('/api/activities', require('./routes/activities.routes'));
-app.use('/api/budget',     require('./routes/budget.routes'));
-app.use('/api/checklist',  require('./routes/checklist.routes'));
-app.use('/api/notes',      require('./routes/notes.routes'));
-app.use('/api/admin',      require('./routes/admin.routes'));
+app.use('/api/auth', authRoutes);
+app.use('/api/trips', tripsRoutes);
+app.use('/api/stops', stopsRoutes);
+app.use('/api/activities', activitiesRoutes);
+app.use('/api/budget', budgetRoutes);
+app.use('/api/checklist', checklistRoutes);
+app.use('/api/notes', notesRoutes);
+app.use('/api/admin', adminRoutes);
 
-app.listen(process.env.PORT || 5000, () =>
-  console.log(`🚀 Server running on port ${process.env.PORT}`)
-);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ success: false, message: 'Internal Server Error' });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 ```
 
-**`server/src/middleware/auth.middleware.js`**
+**`backend/middleware/auth.js`**
 ```js
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ success: false, message: 'No token' });
+const authMiddleware = (req, res, next) => {
   try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ success: false, message: 'Authentication required' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
-  } catch {
-    res.status(401).json({ success: false, message: 'Invalid token' });
+  } catch (error) {
+    return res.status(401).json({ success: false, message: 'Invalid or expired token' });
   }
 };
+
+const adminMiddleware = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    return res.status(403).json({ success: false, message: 'Admin access required' });
+  }
+};
+
+module.exports = { authMiddleware, adminMiddleware };
 ```
 
 ---
@@ -400,90 +423,100 @@ module.exports = (req, res, next) => {
 ### Frontend Setup
 
 ```bash
-cd ../client
+cd ../frontend
 
 # 1. Install dependencies
 npm install
 
 # 2. Configure environment
-cp .env.example .env
-# Set VITE_API_URL to your backend URL
+# Create a .env file and set VITE_API_URL to your backend URL (or leave blank to use the default)
 
 # 3. Start development server
 npm run dev
 # App runs on http://localhost:5173
 ```
 
-**`client/src/api/index.js`**
+**`frontend/src/utils/api.js`**
 ```js
 import axios from 'axios';
 
-const api = axios.create({ baseURL: import.meta.env.VITE_API_URL });
-
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('traveloop_token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default api;
 ```
 
-**`client/src/context/AuthContext.jsx`**
+**`frontend/src/context/AuthContext.jsx`**
 ```jsx
-import { createContext, useContext, useState } from 'react';
-const AuthContext = createContext();
+import React, { createContext, useState, useEffect } from 'react';
+import api from '../utils/api';
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem('traveloop_user')) || null
-  );
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const res = await api.get('/auth/me');
+          setUser(res.data.data);
+        } catch (error) {
+          localStorage.removeItem('token');
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, []);
 
   const login = (userData, token) => {
-    localStorage.setItem('traveloop_user', JSON.stringify(userData));
-    localStorage.setItem('traveloop_token', token);
+    localStorage.setItem('token', token);
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem('token');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, setUser }}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export const useAuth = () => useContext(AuthContext);
-```
-
-**`client/src/components/ProtectedRoute.jsx`**
-```jsx
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-
-export default function ProtectedRoute({ children }) {
-  const { user } = useAuth();
-  return user ? children : <Navigate to="/" replace />;
-}
+};
 ```
 
 ---
 
 ## 🔐 Environment Variables
 
-### `server/.env`
+### `backend/.env`
 ```env
-DATABASE_URL="postgresql://postgres:password@localhost:5432/traveloop"
-JWT_SECRET="your_super_secret_key_change_this"
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="supersecret_jwt_key_for_traveloop"
 PORT=5000
-CLIENT_URL="http://localhost:5173"
 ```
 
-### `client/.env`
+### `frontend/.env`
 ```env
 VITE_API_URL="http://localhost:5000/api"
 ```
@@ -773,10 +806,10 @@ npm install -g @railway/cli
 
 # Login and initialize
 railway login
-cd server
+cd backend
 railway init
 
-# Add PostgreSQL plugin from Railway dashboard
+# Add database plugin from Railway dashboard (e.g., PostgreSQL or use custom SQLite setup)
 # Copy the DATABASE_URL into your environment variables
 
 # Deploy
@@ -784,7 +817,7 @@ railway up
 ```
 
 Set these environment variables in the Railway dashboard:
-- `DATABASE_URL` — auto-provided by Railway PostgreSQL plugin
+- `DATABASE_URL` — database URL
 - `JWT_SECRET` — your secret key
 - `CLIENT_URL` — your Vercel frontend URL
 - `PORT` — `5000`
@@ -793,7 +826,7 @@ Set these environment variables in the Railway dashboard:
 
 ```bash
 npm install -g vercel
-cd client
+cd frontend
 vercel --prod
 ```
 
@@ -803,7 +836,7 @@ Set in Vercel dashboard under Environment Variables:
 ### Update CORS for production
 
 ```js
-// server/src/app.js
+// backend/app.js
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true
