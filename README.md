@@ -29,6 +29,8 @@
 - [Screens & Pages](#-screens--pages)
 - [Build Timeline](#-build-timeline)
 - [Deployment](#-deployment)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 
 ---
@@ -332,8 +334,8 @@ traveloop/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-team/traveloop.git
-cd traveloop/backend
+git clone https://github.com/sharmashweta-04/travel_loop.git
+cd travel_loop/backend
 
 # 2. Install dependencies
 npm install
@@ -845,7 +847,23 @@ app.use(cors({
 
 ---
 
+## 🤝 Contributing
 
+Contributions, issues, and feature requests are welcome!
+
+1. Fork the repository: [https://github.com/sharmashweta-04/travel_loop](https://github.com/sharmashweta-04/travel_loop)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
 
 <div align="center">
 
