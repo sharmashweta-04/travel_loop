@@ -341,14 +341,14 @@ cd travel_loop/backend
 npm install
 
 # 3. Configure environment variables
-# Create a .env file (see Environment Variables section below)
+cp .env.example .env
 
 # 4. Push schema to database
 npx prisma db push
 npx prisma generate
 
 # 5. Start the development server
-node app.js
+npm run dev   # or npm start
 # Server runs on http://localhost:5000
 ```
 
@@ -431,7 +431,8 @@ cd ../frontend
 npm install
 
 # 2. Configure environment
-# Create a .env file and set VITE_API_URL to your backend URL (or leave blank to use the default)
+cp .env.example .env
+# Edit .env with your backend URL if different from default
 
 # 3. Start development server
 npm run dev
