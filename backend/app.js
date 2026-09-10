@@ -25,6 +25,15 @@ app.use('/api/checklist', checklistRoutes);
 app.use('/api/notes', notesRoutes);
 app.use('/api/admin', adminRoutes);
 
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'Traveloop API',
+    timestamp: new Date().toISOString(),
+    uptime: `${Math.floor(process.uptime())}s`,
+  });
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ success: false, message: 'Internal Server Error' });
