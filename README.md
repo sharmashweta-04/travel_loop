@@ -10,6 +10,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=node.js)](https://nodejs.org)
 [![SQLite](https://img.shields.io/badge/SQLite-Prisma-003B57?style=flat&logo=sqlite)](https://sqlite.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat&logo=tailwindcss)](https://tailwindcss.com)
+[![CI](https://github.com/sharmashweta-04/travel_loop/actions/workflows/ci.yml/badge.svg)](https://github.com/sharmashweta-04/travel_loop/actions/workflows/ci.yml)
 
 </div>
 
