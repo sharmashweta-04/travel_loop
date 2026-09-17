@@ -17,6 +17,7 @@ import Checklist from './screens/Checklist';
 import AdminDashboard from './screens/AdminDashboard';
 import Notes from './screens/Notes';
 import Invoice from './screens/Invoice';
+import NotFound from './screens/NotFound';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -55,6 +56,9 @@ const App = () => {
           <Route path="/trips/:id/invoice" element={<ProtectedRoute><Invoice /></ProtectedRoute>} />
           
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          
+          {/* Catch-all 404 Route */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </div>
