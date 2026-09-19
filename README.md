@@ -351,6 +351,9 @@ npx prisma generate
 # 5. Start the development server
 npm run dev   # or npm start
 # Server runs on http://localhost:5000
+
+# 6. (Optional) Run automated tests
+npm test
 ```
 
 **`backend/app.js`**

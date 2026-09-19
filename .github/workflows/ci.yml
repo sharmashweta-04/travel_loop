@@ -1,4 +1,4 @@
-﻿name: Traveloop CI
+name: Traveloop CI
 
 on:
   push:
@@ -58,3 +58,6 @@ jobs:
           cp .env.example .env
           npx prisma db push
           npm run seed
+
+      - name: Run automated API tests
+        run: npm test
